@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-model href="http://www.tei-c.org/release/xml/tei/custom/schema/relaxng/tei_all.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"?>
+<?xml-model href="http://www.tei-c.org/release/xml/tei/custom/schema/relaxng/tei_all.rng" type="application/xml"
+	schematypens="http://purl.oclc.org/dsdl/schematron"?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0">
+   <teiHeader>
+      <fileDesc>
+         <titleStmt>
+            <title>Description des pièces de théâtre</title>
+         </titleStmt>
+         <publicationStmt>
+            <p>Publication Information</p>
+         </publicationStmt>
+         <sourceDesc>
+            <p>Information about the source</p>
+         </sourceDesc>
+      </fileDesc>
+      <!-- import des auteurs? -->
+   </teiHeader>
+   <text>
+      <body>
+         <div type="repertoire">
+            <list>
+               <item xml:id="TITRE1">
+                  <!--TABLE PIECES-->
+                  <bibl>
+                     <!-- id base de donnees -->
+                     <idno type="base_unifiée">5065</idno>
+                     <!-- titre -->
+                     <title>Babillard (Le)</title>
+                     <!-- auteur.rice TABLES AUTEUR - ATTRIBUTIONS - PIECES -->
+                     <author>Boissy, Louis de</author>
+                     <!-- création: date dans @when -->
+                     <date when="1725-06-16"/>
+                     <!-- Genre -->
+                     <note type="genre">comédie</note>
+                  </bibl>
+                  <!-- TABLE ROLES (jointure avec l'id_piece?) -->
+                  <castList>
+                     <castItem xml:id="NOM">
+                        <!-- id base de données -->
+                        <idno type="base_unifiee">83</idno>
+                        <!-- Nom, @gender=féminin si "true", masculin si "false" -->
+                        <role gender="masculin">Léandre</role>
+                        <!-- catégorie -->
+                        <addName>Mrs.</addName>
+                     </castItem>
+                  </castList>
+               </item>
+            </list>
+         </div>
+         
+        <!-- <div type="pieces_refusees">
+            <list>
+               <item xml:id="TITRE2">
+                  <bibl>
+                     <title></title>
+                     <author></author>
+                     <!-\- Je n'ai pas trouve d'element pour le genre d'une oeuvre, pour l'instant j'utilise <note> avec @type -\->
+                     <note type="genre"></note>
+                  </bibl>
+               </item>
+            </list>
+         </div>-->
+
+      </body>
+   </text>
+</TEI>

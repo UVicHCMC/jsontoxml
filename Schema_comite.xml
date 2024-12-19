@@ -1,0 +1,722 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-model href="./ODD_comite.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"?>
+<?xml-model href="./ODD_comite.rng" type="application/xml"
+	schematypens="http://purl.oclc.org/dsdl/schematron"?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0">
+   <teiHeader>
+      <fileDesc>
+         <titleStmt>
+            <title>Registre coté <date when="1700-12-20"/></title>
+            <!-- Registre R418 années 1821-1824 -->
+         </titleStmt>
+         <editionStmt>
+            <edition>Transcription encodée par <name/></edition>
+            <!-- Auteur.rice de l'encodage et édition numérique -->
+            <respStmt>
+               <!-- Crédit aux transcripteur.rices, on peut ajouter @ref pour faire un lien vers le mémoire -->
+               <resp>Transcription produite par / tiree du mémoire de M1/M2 de</resp>
+               <name/>
+            </respStmt>
+         </editionStmt>
+         <publicationStmt>
+            <p>A établir. </p>
+            <!-- Edition numérique de la transcription du registre -->
+         </publicationStmt>
+         <sourceDesc>
+            <!-- Description du registre. Lien vers le registre numérisé. -->
+            <msDesc source="lien vers version numérisée">
+               <!-- On peut mettre un lien vers la description du registre sur le portail Lagrange -->
+               <msIdentifier source="lien vers portail Lagrange">
+                  <institution>Bibliothèque-musée de la Comédie-Française</institution>
+                  <!-- La série et sous-série permettra d'identifier le type de registre, notamment pour la fin du 18ème siècle et le 19ème siècle -->
+                  <repository>Série/sous-série</repository>
+                  <idno>cote</idno>
+               </msIdentifier>
+            </msDesc>
+         </sourceDesc>
+      </fileDesc>
+      <profileDesc>
+         <!-- Le profileDesc est normalement utilisé pour décrire les "participants" dans un texte, définir des termes etc...
+         Pour le moment,je ne sais pas si cela est utile pour nous. -->
+         <!-- <particDesc> -->
+         <!-- <calendarDesc> pour le registre avec le calendrier républicain? -->
+      </profileDesc>
+      <!--      <encodingDesc>
+         <schemaRef></schemaRef>
+         </encodingDesc> Renvoie au fichier XML du schéma -->
+      <!-- <revisionDesc>
+         Chaque modification du fichier ici. Cela permet de garder une trace et d'identifier plus rapidement un problème au besoin
+      </revisionDesc> -->
+   </teiHeader>
+   <text>
+      <!-- On peut mettre un <front> qui sert à décrire la page de garde. -->
+      <!--      <front facs="https://comedie-francaise.bibli.fr/visionneuse.php?lvl=afficheur&explnum=23875#page/4/mode/2up">
+         
+      </front>-->
+      <body>
+
+         <!-- ENCODAGE TYPE DES SEANCES DE COMITES (ou du moins le plus récurrent)-->
+
+         <!-- I. 17EME-18EME SIECLE -->
+
+         <!-- Exemple tiré de Spinec, R52_0_1688 https://flipbooks.cfregisters.org/R52_0_1688/index.html#page/1/mode/1up -->
+         <div type="type_assemblee" when="1688-01-12">
+
+            <!-- A. PREAMBULE (optionnel) -->
+
+            <div type="preambule">
+               <p>Ce jour d'huy <date when="1688-01-12">lundy 12e janvier 1688</date> la Compagnie
+                  s'est assemblée a son ordinaire dans la salle commune de son <placeName
+                     ref="id_lieux">hostel</placeName> pour y dellibérer de ses affaires les présens
+                  a l'assemblée ont signé avant <!-- avant = notAfter, ISO 8601 --><time
+                     notAfter="10:00:00">dix heures</time> pour le droit de <term ref="id_glossaire"
+                     >jetton</term></p>
+            </div>
+
+            <!-- B. PRESENTS ET ABSENTS (optionnel) -->
+            <!-- 1. Présents -->
+            <div type="signature">
+               <signed>
+                  <persName ref="id_nom">De Champmeslé</persName>
+                  <lb/>
+                  <persName ref="id_nom">Le Comte</persName>
+                  <lb/>
+                  <persName ref="id_nom">De la Grange</persName>
+                  <lb/>
+                  <persName ref="id_nom">Dancourt</persName>
+                  <lb/>
+                  <persName ref="id_nom">Devilliers</persName>
+                  <lb/>
+                  <persName ref="id_nom">Guérin</persName>
+                  <lb/>
+                  <lb/>
+                  <lb/>
+                  <lb/>
+                  <lb/>
+               </signed>
+
+               <signed/>
+               <lb/>
+               <signed/>
+               <lb/>
+               <signed></signed>
+               <lb/>
+               <signed></signed>
+               <lb/>
+               <signed></signed>
+               <lb/>
+               <signed><persName ref="id_nom">La Tuillerie</persName></signed>
+               <lb/>
+               <signed><persName ref="id_nom">Du Perier</persName></signed>
+               <lb/>
+               <signed><persName ref="id_nom">Dauvilliers</persName></signed>
+               <lb/>
+               <signed><persName ref="id_nom">Raisin</persName></signed>
+               <lb/>
+               <signed><persName ref="id_nom">Du Croisy</persName></signed>
+               <lb/>
+               <signed><persName ref="id_nom">Beauval</persName></signed>
+               <lb/>
+               <signed><persName ref="id_nom">Delathorilliere</persName></signed>
+               <lb/>
+               <signed><persName ref="id_nom">Raisin</persName></signed>
+               <lb/>
+            </div>
+
+            <!-- 2. Absents (optionnel) -->
+            <div type="absents">
+               <head>Mrs</head>
+               <!-- Dans les registres du 17e-18e, les absents sont divisés entre les hommes et les femmes, donc on aura deux listes -->
+               <list>
+                  <item><persName ref="id_nom">Baron</persName></item>
+                  <item><persName ref="id_nom">Desmarres</persName></item>
+               </list>
+               <!--<list>
+                  <head>Mlles</head>
+                  <item ref="id_nom">Nom</item>
+               </list>-->
+            </div>
+
+            <!-- C. DELIBERATION (optionnel) -->
+            <!-- Un élément <div> pour chaque deliberation avec un @ref et l'id du sujet abordé. On peut indiqué plusieurs thématiques-->
+            <div type="délibération" ana="id_sujet">
+               <p>On a nommé pour <term ref="id_glossaire">quinzainiers</term> Mrs<persName
+                     ref="id_nom">De la Grange</persName> et <persName ref="id_nom">La
+                     Torilière</persName>. On a fait un répertoire. On a dellibéré de <del
+                     rend="overstrike"> desdomager Monsieur dancourt de la peine qu'il a fait aprez
+                     Pasues en ce que</del> faire un présent a Monsieur <persName ref="id_nom"
+                     >Dancourt</persName> de <measure type="somme" ana="id_sujet">quinze louis
+                     d'or</measure>, pour la pièce <title type="piece" ref="id_piece"
+                     rendition="italic">des Joueuses</title> qui a esté interrompue par le voyage de
+                     <placeName ref="id_lieu">Fontainebleau</placeName>, laquelle demeurera<note
+                     type="marge" rend="margin-left">Les <measure type="somme">15 louis
+                        d'or</measure> ont esté payer a Mr <persName ref="id_nom">de
+                        Champmeslé</persName> par <persName ref="id_nom">De la Grange</persName> le
+                        <date when="1687-01-27">21 janvier 1687</date></note> tourner a la troupe
+                  pour la jouer quand il luy plaira, sans que Mr <persName ref="id_nom"
+                     >Dancourt</persName> ayt plus de part d'autheur. On a résolu de donner des
+                     <term ref="id_glossaire">billets</term> a toutes pièces a l'avenir, a moins
+                  qu'il n'y ayt quelque délibération contraire de <orgName ref="id_org">la
+                     Compagnie</orgName> assemblée et lorsqu'il y aura quelque délibération de
+                  l'assemblée qu'elle ne pourra estre révoquée que dans une autre assemblée et non
+                  pas par des délibérations particulières. La première classe commence
+                  aujourd'huy.</p>
+               <lb/>
+               <p>Arresté en présence et du consentement de <orgName ref="id_org">la
+                     Compagnie</orgName></p>
+            </div>
+            <!-- Parfois signature pour conclure la séance-->
+            <div type="signature">
+               <lb/>
+               <signed><persName ref="id_nom">De la Grange</persName></signed>
+               <lb/>
+               <signed><persName ref="id_nom">Delathorilliere</persName></signed>
+               <lb/>
+               <signed><persName ref="id_nom">Dauvilliers</persName></signed>
+               <lb/>
+               <p><measure type="total" ana="id_glossaire">28 <term ref="id_glossaire"
+                        >Jettons</term></measure></p>
+            </div>
+         </div>
+
+         <!-- ____________________________________________ -->
+
+         <!-- II. 19EME SIECLE (à partir du R415) -->
+
+         <!-- Exemple avec comité du 29/04/1830 (R420) https://comedie-francaise.bibli.fr/visionneuse.php?lvl=afficheur&explnum=24254#page/28/mode/2up -->
+         <div type="type_assemblee" when="1830-04-29">
+
+            <!-- A. TITRE -->
+            <head rend="margin-right">Comité du <date when="1830-04-29">jeudi 29 avril
+               1830</date></head>
+
+            <!-- B. DELIBERATIONS -->
+            <div type="délibération" ana="id_sujet">
+               <!-- ORDRE DU JOUR (optionnel) -->
+               <!-- Si l'ordre du jour est dans la marge, on respecte les règles de transcription établies -->
+               <head type="agenda">[Lettre et remerciements à <persName ref="id_nom">M. de la
+                     Bouillerie</persName>]</head>
+               <p>Le comité arrête qu’il sera écrit à <persName ref="id_nom">Son Excellence Mgr le
+                        <roleName type="nobilite">Baron</roleName> de la Bouillerie, <roleName
+                        type="ministre">ministre d’état</roleName>, <roleName type="pair">pair de
+                        France</roleName>, <roleName type="intendant_general">intendant général de
+                        la Maison du Roi</roleName></persName>, pour lui offrir l’hommage des
+                  remerciements de la <orgName ref="id_org">Comédie-Française</orgName> qui vient
+                  d’apprendre avec reconnaissance par sa lettre en date de ce jour que <roleName
+                     type="nobility" ref="id_nom">Sa Majesté</roleName> ne refusera point
+                  d’autoriser l’affectation de <measure type="somme" ana="id_sujet">48 000
+                     F</measure> que la <orgName ref="id_org">Comédie</orgName> reçoit annuellement
+                  pour la loge royale, à la garantie de l’emprunt de <measure type="somme"
+                     ana="id_sujet">200 000 F</measure> présentement indispensable pour que la
+                     <orgName ref="id_org">Comédie</orgName> puisse effectuer le premier mai son
+                  payement qui ne peut être retardé et solder pour <roleName type="nobility"
+                     ref="id_nom">S. A. Mgr le Duc d’Orléans</roleName> propriétaire de la salle une
+                  somme de <measure type="somme" ana="id_sujet">25 000 F</measure> exigible depuis
+                  le 1er avril. </p>
+            </div>
+            <div type="délibération" ana="id_sujet">
+               <head type="agenda">[Signification de <persName ref="id_nom">Mlle Ross
+                     Despréaux</persName>]</head>
+               <p>Le comité arrête que la signification faite à la <orgName ref="id_org"
+                     >Comédie-Française</orgName> sur la personne de <persName ref="id_nom">M.
+                     Michelot</persName>, l’un des membres du comité, à la requête que <persName
+                     ref="id_nom">Mlle Ross Despréaux</persName>, actrice pensionnaire de la dite
+                  signification, en date du <date>28 mai</date> sera, vu l’absence de <persName
+                     ref="id_nom">M. De Normandie</persName> avoué membre du conseil, envoyée à
+                     <persName ref="id_nom">M. Dejoly</persName>, président du conseil, qui sera
+                  prié de vouloir bien prendre la peine de mettre la <orgName ref="id_org"
+                     >Comédie</orgName> en règle à cet égard par la voie convenable. </p>
+            </div>
+            <div type="signature">
+               <lb/>
+               <signed><persName ref="id_nom">Michelot</persName></signed>
+               <lb/>
+               <signed><persName ref="id_nom">Desmousseaux</persName></signed>
+               <lb/>
+               <signed><persName ref="id_nom">Grandville</persName></signed>
+               <lb/>
+               <signed><persName ref="id_nom">Monrose</persName></signed>
+               <lb/>
+               <signed><persName ref="id_nom">Joanny</persName></signed>
+               <lb/>
+            </div>
+         </div>
+
+         <!-- ______________________________________________ -->
+
+         <!-- III. VARIATIONS -->
+
+         <!--Liste de présents (fin du 19ème)-->
+         <!-- Au 19eme siecle, lorsque les personnes présentes sont rapportées, elles ne signent plus (sauf dans le R415), mais sont sous forme de liste: -->
+         <!-- Extrait https://comedie-francaise.bibli.fr/visionneuse.php?lvl=afficheur&explnum=24945#page/2/mode/2up-->
+         <div type="type_assemblee" when="1882-01-05">
+            <head>Comité d’administration</head>
+            <head>du <date when="1882-01-05">jeudi 5 janvier 1882</date></head>
+            <div type="preambule">
+               <p>À <time when="15:00:00">3 heures</time> de relevée, les membres du comité
+                  d’administration se sont réunis, sous la présidence de M. <persName ref="id_nom"
+                     >Émile Perrin</persName>, <term ref="id_glossaire">administrateur
+                     général</term>, dans la <placeName ref="id_lieux">salle ordinaire</placeName>
+                  de leurs séances. Étaient présents :</p>
+               <list type="presents">
+                  <item>MM. <persName ref="id_nom">Got</persName>,</item>
+                  <item><persName ref="id_nom">Delaunay</persName>,</item>
+                  <item><persName ref="id_nom">Maubant</persName>,</item>
+                  <item><persName ref="id_nom">Coquelin</persName>,</item>
+                  <item><persName ref="id_nom">Febvre</persName>,</item>
+                  <item><persName ref="id_nom">Worms</persName>,</item>
+                  <item><persName ref="id_nom">Mounet-Sully</persName>,</item>
+                  <item><persName ref="id_nom">Laroche</persName>.</item>
+               </list>
+               <p>La séance est ouverte.</p>
+            </div>
+         </div>
+
+         <!-- ______________________________________________________________________________________________________ -->
+
+         <!-- // CAS PARTICULIERS \\ -->
+
+         <!-- I. LECTURE DU REPERTOIRE / REPETITIONS (17ème-18ème) -->
+
+         <!-- Exemple tiré de Spinec du R52_0_1681  https://flipbooks.cfregisters.org/R52_0_1682/index.html#page/5/mode/1up-->
+         <div type="type_assemblee" when="1682-09-28">
+            <div type="preambule">
+               <p>Ce jour d'huy <date when="1682-09-28">lundy 28 septembre</date>, la Trouppe s'est
+                  assemblée ; les présens sont :</p>
+            </div>
+            <!--<signed>
+               <persName></persName>
+               <persName></persName>
+            </signed>-->
+            <div type="signature">
+               <signed><persName ref="id_nom">Hubert</persName></signed>
+               <lb/>
+               <signed><persName ref="id_nom">De Champmeslé</persName></signed>
+               <lb/>
+               <signed><persName ref="id_nom">De la Grange</persName></signed>
+               <lb/>
+               <signed><persName ref="id_nom">De Verneuil</persName></signed>
+               <lb/>
+               <signed><persName ref="id_nom">Brecourt</persName></signed>
+               <lb/>
+               <signed><persName ref="id_nom">Le Comte</persName></signed>
+               <lb/>
+               <signed><persName ref="id_nom">Le Conte</persName></signed>
+               <lb/>
+               <signed><persName ref="id_nom">Lagrange</persName></signed>
+               <lb/>
+               <signed><persName ref="id_nom">Baron</persName></signed>
+               <lb/>
+               <signed><persName ref="id_nom">Debrie</persName></signed>
+               <lb/>
+               <signed><persName ref="id_nom">Baron</persName></signed>
+               <lb/>
+               <signed><persName ref="id_nom">De Hauteroche</persName></signed>
+               <lb/>
+               <signed><persName ref="id_nom">Poisson</persName></signed>
+               <lb/>
+               <signed><persName ref="id_nom">Beauval</persName></signed>
+               <lb/>
+               <signed><persName ref="id_nom">Chemesle</persName></signed>
+               <lb/>
+               <signed><persName ref="id_nom">La Tuillerie</persName></signed>
+               <lb/>
+               <signed><persName ref="id_nom">Louise Jacob</persName></signed>
+               <lb/>
+               <signed><persName ref="id_nom">Dennebault</persName></signed>
+               <lb/>
+               <signed><persName ref="id_nom">Guérin</persName></signed>
+               <lb/>
+               <signed><persName ref="id_nom">Dauvilliers</persName></signed>
+               <lb/>
+               <signed><persName ref="id_nom">Béjard</persName></signed>
+               <lb/>
+               <signed><persName ref="id_nom">Rosimonde</persName></signed>
+               <lb/>
+               <signed><persName ref="id_nom">Raisin</persName></signed>
+               <lb/>
+               <signed><persName ref="id_nom">Bauvall</persName></signed>
+               <lb/>
+               <signed><persName ref="id_nom">La raisin</persName></signed>
+               <lb/>
+               <p>Présens a l'assemblée <time notAfter="10:00:00">avant dix heures</time> au nombre
+                  de <measure type="total" ana="id_glossaire">25</measure></p>
+            </div>
+            <div type="deliberation" ana="id_sujet">
+               <list>
+                  <head>Repertoire</head>
+                  <item><date when="1682-09-29">29 mardy</date>
+                     <title ref="id_piece">Andromede</title></item>
+                  <item><date when="1682-09-30">30 mercredy</date>
+                     <title ref="id_piece">Agamemnon</title>, <title ref="id_piece">Crispin bel
+                        esprit</title></item>
+                  <item><date when="1682-10-01">1 jeudy</date>
+                     <title ref="id_piece">Misanthrope</title></item>
+                  <item><date when="1682-10-02">2 vendredy</date>
+                     <title ref="id_piece">Othon</title>, <title ref="id_piece">Carrosses</title> ou
+                        <title ref="id_piece">Andromede</title></item>
+                  <item><date when="1682-10-03">3 samedy</date>
+                     <title ref="id_piece">L’Étourdi</title></item>
+                  <item><date when="1682-10-04">4 dimanche</date>
+                     <title ref="id_piece">Othon</title>, <title ref="id_piece">Carrosses</title> ou
+                        <title ref="id_piece">Andromede</title></item>
+                  <item><date when="1682-10-05">5 lundi</date>
+                     <title ref="id_piece">Le Menteur</title></item>
+                  <item><date when="1682-10-06">6 mardy</date>
+                     <title ref="id_piece">Hercule</title> et <title ref="id_piece">le
+                     Deuil</title></item>
+
+                  <!-- Dans le cas d'une piece est râturée -->
+                  <item><date>7 mercredy</date>
+                     <!-- l'élément <del> permet d'encoder les suppressions dans le texte. Avec le @type, on peut preciser que c'est du texte barré, et on pourra l'afficher comme tel grâce au CSS -->
+                     <del type="barre"><title ref="id_piece">La Jalouse d'elle-meme</title></del>
+                     <title ref="id_piece">La Devineresse</title></item>
+                  <item><date when="1682-10-08"> 8 jeudy</date>
+                     <title ref="id_piece">Othon</title> ou <title ref="id_piece">Cinna</title> et
+                        <title ref="id_piece">le Cocu imaginaire</title></item>
+                  <item><date when="1682-10-09">9 vendredy</date>
+                     <title ref="id_piece">La Devineresse</title></item>
+                  <item><date when="1682-10-10">10 <del type="barre">dimanche</del>samedy</date>
+                     <title ref="id_piece">La Jalouse d'elle même</title></item>
+                  <item><date when="1682-10-11">11 dimanche</date>
+                     <title ref="id_piece">Othon</title> ou <title ref="id_piece">le
+                     Cid</title></item>
+                  <item><date when="1682-10-12">12 lundy</date>
+                     <title ref="id_piece">La Mère coquette</title></item>
+               </list>
+               <p>[...]</p>
+            </div>
+         </div>
+
+         <!-- ______________________________________________ -->
+
+         <!-- II. COMPTABILITE/FINANCES-->
+
+         <!-- exemple R52_21 https://flipbooks.cfregisters.org/R52_21/index.html#page/40/mode/1up-->
+         <!-- autre exemple: https://flipbooks.cfregisters.org/R52_0_1686/index.html#page/29/mode/1up-->
+
+         <!-- Cette séance n'est pas datée, peut-être mettre @notBefore date de la précédente séance et @notAfter date de la suivante-->
+         <div type="type_assemblee" notBefore="1756-04-30" notAfter="1756-05-03" ana="id_sujet">
+            <!-- Dans cet exemple particulier du r52_21, il n'y a pas de découpage par thématique, il est décidé de ne pas mettre de <div> -->
+            <p>Ce Jourd’huy La Troupe s’est assemblée et apres avoir examinée ses affaires par
+               raport à l’établissement, dont le fond monte à <measure type="total" ana="pension"
+                  >trois cent deux mille sept livres cinq sols</measure> divisé en vingt trois parts
+               qui composent la societé, a trouvé qu’il en appartient à Monsieur <persName
+                  ref="id_nom">Le Grand</persName> une part entiere montant à <measure
+                  type="montant" ana="id_sujet">treize mille cent trente livres quinze
+                  sols</measure> qu’il a acquis cy... <measure type="montant" ana="id_sujet"
+                  >13130lt.15s.</measure></p>
+            <list type="parts_hommes" ana="id_sujet">
+               <head>Mrs.</head>
+               <item><persName ref="id_nom">De La Thorilliere</persName>, Id. ... <measure
+                     type="montant" ana="id_sujet">13130. 15.</measure></item>
+               <item><persName ref="id_nom">Armand</persName>, Id. ... <measure type="montant"
+                     ana="id_sujet">13130. 15.</measure></item>
+               <item><persName ref="id_nom">Dubreüil</persName>, Id. ... <measure type="montant"
+                     ana="id_sujet">13130. 15.</measure></item>
+               <item><persName ref="id_nom">Sarrazin</persName>, Id. ... <measure type="montant"
+                     ana="id_sujet">13130. 15.</measure></item>
+               <item><persName ref="id_nom">Grandval</persName>, Id. ... <measure type="montant"
+                     ana="id_sujet">13130. 15.</measure></item>
+               <item><persName ref="id_nom">Dangeville</persName>, Id. ... <measure type="montant"
+                     ana="id_sujet">13130. 15.</measure></item>
+               <item><persName ref="id_nom">Dubois</persName>, ... <measure type="montant"
+                     ana="id_sujet">9280. 17. 6.</measure></item>
+               <item><persName ref="id_nom">De Bonneval</persName>, ... <measure type="montant"
+                     ana="id_sujet">8750. 8. 3.</measure></item>
+               <item><persName ref="id_nom">De La Nouë</persName>, ... <measure type="montant"
+                     ana="id_sujet">13130. 15.</measure></item>
+               <item><persName ref="id_nom">Paulin</persName>, ... <measure type="montant"
+                     ana="id_sujet">8553. 18. 7.</measure></item>
+               <item><persName ref="id_nom">Le Kain</persName>, ... <measure type="montant"
+                     ana="id_sujet">4832. 16. 8.</measure></item>
+               <item><persName ref="id_nom">De Bellecourt</persName>, ... <measure type="montant"
+                     ana="id_sujet">5444. 16. 5.</measure></item>
+               <item><persName ref="id_nom">Preville</persName>, ... <measure type="montant"
+                     ana="id_sujet">13130. 15.</measure></item>
+            </list>
+            <list type="parts_femmes" ana="id_sujet">
+               <head>Melles.</head>
+               <item><persName ref="id_nom">De La Motte</persName>, ... <measure type="montant"
+                     ana="id_sujet">13130. 15.</measure></item>
+               <item><persName ref="id_nom">Dangeville</persName> Id, ... <measure type="montant"
+                     ana="id_sujet">13130. 15.</measure></item>
+               <item><persName ref="id_nom">Gaussin</persName>, Id. ... <measure type="montant"
+                     ana="id_sujet">13130. 15.</measure></item>
+               <item><persName ref="id_nom">Grandval</persName>, Id. ... <measure type="montant"
+                     ana="id_sujet">13130. 15.</measure></item>
+               <item><persName ref="id_nom">Du Mesnil</persName>, Id. ... <measure type="montant"
+                     ana="id_sujet">13130. 15.</measure></item>
+               <item><persName ref="id_nom">La Voy</persName>, ... <measure type="montant"
+                     ana="id_sujet">11353. 16. 10.</measure></item>
+               <item><persName ref="id_nom">Droüin</persName>, ... <measure type="montant"
+                     ana="id_sujet">13130. 15.</measure></item>
+               <item><persName ref="id_nom">De La Tude</persName>, ... <measure type="montant"
+                     ana="id_sujet">13130. 15.</measure></item>
+               <item><persName ref="id_nom">Brillant</persName>, ... <measure type="montant"
+                     ana="id_sujet">6565. 7. 6.</measure></item>
+               <item><persName ref="id_nom">Hus</persName>, ... <measure type="montant"
+                     ana="id_sujet">6565. 7. 6.</measure></item>
+               <item><persName ref="id_nom">Gueant</persName>, ... <measure type="montant"
+                     ana="id_sujet">6565. 7. 6.</measure></item>
+            </list>
+            <p rend="margin-right"><measure type="total" ana="id_sujet">266307lt. 19s.
+               8d.</measure></p>
+         </div>
+
+         <!-- ______________________________________________ -->
+
+         <!-- III. VOTES -->
+         <!-- https://flipbooks.cfregisters.org/R52_0_1692/index.html#page/5/mode/1up-->
+         <div type="type_assemblee" when="1692-01-07">
+            <div type="preambule">
+               <p>Aujourd'huy <date when="1692-01-07">7me janvier 1692</date>: la compagnie s'est
+                  assemblée pour rendre reponse a monsieur <persName ref="id_nom">de Brie</persName>
+                  sur la lecture de la tragédie des <title ref="id_piece">Heraclides</title>, les
+                  voix recüeilluye comme il en suit:</p>
+            </div>
+            <div type="délibération" ana="id_sujet">
+               <div type="vote" ana="id_piece">
+                  <cb n="1"/>
+                  <list type="vote_pour">
+                     <head>la pièce est joüable</head>
+                     <item><persName ref="id_nom">Du Perier</persName>, en la racomodant</item>
+                     <item><persName ref="id_nom">Poisson</persName> Jouable</item>
+                     <item>La pièce est jouable en la racomodant <persName ref="id_nom"
+                           >Beauval</persName></item>
+                     <item>Je la trouve jouable en la corigeant <persName ref="id_nom"
+                           >Delathorilliere</persName></item>
+                     <item>Je trouve que la pièce peut estre joüée en changeant quelques scènes et
+                        quelque chose dans la disposition de la pièce <persName ref="id_nom">Le
+                           Comte</persName></item>
+                     <item><persName ref="id_nom">Devilliers</persName> Je trouve que la pièce est
+                        jouable en racomodan quelque chozze</item>
+                  </list>
+                  <cb n="2"/>
+                  <list type="vote_contre">
+                     <head>elle n'est pas jouable</head>
+                     <item><persName ref="id_nom">De Beaubour</persName> elle n'est point jouable en
+                        l'estat qu'elle est </item>
+                     <item><persName ref="id_nom">Guérin</persName></item>
+                     <item>La pièce des Eraclides ne me paroist point jouable en l'estat quelle est.
+                        Du reste je ne suis pas assez éclairé pour sçavoir ce qu'il y a ay
+                        raccomoder <persName ref="id_nom">De Rosélis</persName></item>
+                     <item><persName ref="id_nom">Raisin</persName></item>
+                     <item>elle n'est point jouable <persName ref="id_nom">Desmare</persName></item>
+                  </list>
+               </div>
+            </div>
+         </div>
+
+         <!-- ______________________________________________ -->
+
+         <!-- IV. LETTRES -->
+         <!-- Exemple du R52_26 https://flipbooks.cfregisters.org/R52_26/index.html#page/9/mode/1up -->
+         <div type="type_assemblee" when="1784-03-03" ana="id_sujet">
+            <head>Du <date when="1784-03-03">mercredi 3 mars.</date></head>
+            <head>Asssemblée pour les <term ref="id_sujet">Comptes</term>.</head>
+            <div type="lettre_reçue" ana="id_sujet id_nom">
+               <head>Lettre de <persName ref="id_nom">M.e Vestris</persName>.</head>
+               <p>Mes chers Camarades, j’ai eu la fièvre toute la nuit : la douleur de côté que j’ai
+                  depuis trois Semaines est si fort augmentée que l’on sera peut être obligé de me
+                  saigner ce soir. Je vous prie donc de ne pas compter sur moi pour demain. Je viens
+                  de renvoyer mon rôle à <persName ref="id_nom">M. de la Harpe</persName>, pour
+                  qu’il le porte à <persName ref="id_nom">Mlle. Thénard</persName> ; et qu’avec les
+                  notions qu’elle en a déjà, elle puisse y être prête le plutôt possible. Je suis
+                  bien fâchée de l’embarras que je vous cause, mais vous savez si c’est ma faute :
+                  J’avais tout fait pour ma Société, tout donné pour avoir la paix, et vous voyez ce
+                  qui m’arrive : vous devez donc croire que je suis plus affligée que vous.</p>
+               <closer>Je suis avec autant d’estime que d’attachement, mes chers Camarades, Votre
+                  très humble et très obéissante Servante. (Signé) <persName ref="id_nom">R.
+                     Vestris.</persName>
+                  <placeName ref="id_lieux">Paris</placeName>, ce <date when="1784-03-03">mercredi 3
+                     mars 1784</date>.</closer>
+            </div>
+            <div type="lettre_envoyée" ana="id_sujet id_nom">
+               <head>Réponse de la <orgName ref="id_org">Comédie</orgName> à <persName ref="id_nom"
+                     >M.e Vestris</persName> faite à la d.e assemblée et signée des présents.</head>
+               <opener>Madame et chère Camarade,</opener>
+               <p>Nous partageons tous votre chagrin. Si nous avons entendu hier avec douleur
+                  l’impertinent traitement que vous a fait un Polisson ; nous avons vu avec plaisir
+                  qu’il y a pour vous un puissant motif de consolation et de dédommagement, puisque
+                  le Public juste et éclairé a couvert cette injure par les applaudissements les
+                  plus vifs et les plus généraux ; que puisqu’il s’est déclaré d’une manière si vive
+                  et si franche, il vous a donné une preuve de la considération qu’il a pour vous,
+                  que vous désirez et que vous méritez. Arrêtez-vous à cette seule opinion ; elle
+                  est la plus consolante pour votre cœur et la plus encourageante pour vos talents. </p>
+               <closer>Rétablissez votre santé, ayez du courage ; et soyez persuadée que tous vos
+                  Camarades sont avec la plus sincère amitié, Madame et chère Camarade, Vos très
+                  humbles et très… <date when="1784-03-03">Ce 3 mars 1784</date>.</closer>
+            </div>
+         </div>
+
+
+         <!-- ______________________________________________ -->
+
+         <!-- V. AUDITIONS -->
+
+         <!-- Extrait du R425: https://comedie-francaise.bibli.fr/visionneuse.php?lvl=afficheur&explnum=24946#page/40/mode/2up -->
+         <div type="type_assemblee" when="1888-08-01" ana="id_sujet">
+            <head>Auditions annuelles</head>
+            <head>Séance du <date when="1888-08-01">mercredi 1er août 1888</date></head>
+            <div type="preambule">
+               <p>À <time when="13:30:00">une heure et demie</time>, le comité d’administration,
+                  présidé par M. J. Claretie, administrateur général, et composé de MM.</p>
+               <list type="presents">
+                  <item><persName ref="id_nom">Got</persName>,</item>
+                  <item><persName ref="id_nom">Thiron</persName>,</item>
+                  <item><persName ref="id_nom">Mounet-Sully</persName>,</item>
+                  <item><persName ref="id_nom">La Roche</persName>,</item>
+                  <item><persName ref="id_nom">Coquelin cadet</persName></item>
+                  <item><persName ref="id_nom">Prud’hon*</persName></item>
+                  <item><persName ref="id_nom">Silvain*</persName></item>
+               </list>
+               <p>*Adjoints en qualité de <term ref="id_glossaire">semainiers</term>.</p>
+               <p>S’est transporté dans la salle pour procéder à l’audition des aspirants dont les
+                  noms suivent :</p>
+            </div>
+            <div type="délibération" ana="id_sujet">
+               <list>
+                  <item n="1">1° <persName ref="id_nom">M. Rouvenat</persName>
+                     <title type="piece" ref="id_piece">Le Lion amoureux</title> – acte II, scène
+                     dernière – <ref target="id_role">Humbert</ref></item>
+                  <item n="2">2° <persName ref="id_nom">M. Malbert</persName>
+                     <title type="piece" ref="id_piece">Le Misanthrope</title> – acte IV, scène 3 –
+                        <ref target="id_role">Alceste</ref>
+                  </item>
+                  <item n="3">3° <persName ref="id_nom">Mlle de Rudeni</persName>
+                     <title ref="id_piece">Britannicus</title> – acte IV, scènes 1 et 2 – <ref
+                        target="id_role">Agrippine Rodogune</ref> – <ref target="id_role"
+                        >Cléopâtre</ref></item>
+                  <!--<p>[...]</p>-->
+               </list>
+               <p>À <time when="17:00:00">cinq heures</time>, le comité rentre dans la <placeName
+                     ref="id_lieu">salle ordinaire de ses séances</placeName>, et discute le mérite
+                  de quelques-uns des candidats qu’il vient d’entendre. </p>
+
+               <p>Mlles <persName ref="id_nom">Kolb</persName> et <persName ref="id_nom"
+                     >Lody</persName> ont été particulièrement remarquées, la première dans les
+                     <term type="emploi" ref="id_glossaire">soubrettes</term>, la seconde dans les
+                     <term type="emploi" ref="id_glossaire">amoureuses</term>, mais les deux <term
+                     ref="id_glossaire">emplois</term> étant encombrés en ce moment, il n’y a pas
+                  lieu d’engager ces deux artistes.</p>
+            </div>
+         </div>
+
+         <!-- ______________________________________________ -->
+
+         <!-- VI. DISTRIBUTION DES ROLES (optionnel, dans le cas où la distribution des rôles n'est pas contenue dans une assemblée) -->
+
+         <!-- Exemple tire du R52_4 https://flipbooks.cfregisters.org/R52_4/index.html#page/256/mode/1up-->
+         <div type="distribution_roles" notBefore="1716-03-16" notAfter="1716-03-18"
+            ana="id_sujet id_piece">
+            <head>Disposition de <title ref="id_piece">La Princesse d'Elide</title></head>
+            <castList>
+               <castItem>
+                  <role ana="id_role">La Princesse d'Elide</role>
+                  <actor ref="id_nom">Mlle. Desmares</actor>
+               </castItem>
+               <castItem>
+                  <role ana="id_role">Philis</role>
+                  <actor ref="id_nom">Mlle. Mimy</actor>
+               </castItem>
+               <p>[...]</p>
+            </castList>
+         </div>
+
+         <!-- ______________________________________________ -->
+
+         <!-- VII. ENCODAGE D'UNE SEANCE DONT LE SUJET EST DANS LE TITRE (R52_24-26, R425) -->
+
+         <!-- https://flipbooks.cfregisters.org/R52_25/index.html#page/6/mode/1up-->
+         <div type="type_assemblée" when="1775-05-21" ana="id_sujet">
+            <head>Du <date when="1775-05-21">Dimanche 21 mai</date>.</head>
+            <head>Assemblée pour <term ref="id_sujet">Lectures</term>.</head>
+            <div type="vote" ana="id_piece">
+               <p>
+                  <title ref="id_piece">Le Couronnement de Télemaque</title>, Comédie en un Acte, en
+                  Vers De M. <list>
+                     <item>15 voix d’acceptation.</item>
+                     <item>1 Voix de Corrections.</item>
+                     <item>3. Voix de Refus.</item>
+                  </list>} Reçue <lb/>__________</p>
+            </div>
+         </div>
+
+         <!-- ______________________________________________ -->
+
+         <!-- VIII. ARRÊTS -->
+
+         <!--         Exemple tiré du R416: https://comedie-francaise.bibli.fr/visionneuse.php?lvl=afficheur&explnum=23873#page/12/mode/2up-->
+         <div type="type_assemblee" when="1813-02-10">
+            <p>[...]</p>
+            <!-- Cas où on a plusieurs arrêtés. -->
+            <div type="arrêts">
+               <p>Le <roleName ref="id_glossaire">commissaire impérial</roleName> notifie au comité
+                  deux arrêtés de <roleName ref="id_glossaire id_nom">M. le surintendant des
+                     spectacles</roleName> relatifs à <persName ref="id_nom">M.
+                     Saint-Prix</persName> et à <persName ref="id_nom">Mlle Devienne</persName> qui
+                  doivent se retirer au <date when="1813-04-01">1er avril</date> prochain.</p>
+               <p>Ces deux arrêtés sont ainsi conçus :</p>
+               <div type="arrêté" ana="id_nom id_sujet" when="1813-01-15">
+                  <head>[Arrêté de <roleName ref="id_glossaire id_nom">M. le surintendant</roleName>
+                     sur la demande de <persName ref="id_nom">M. Saint-Prix</persName>. Sa retraite
+                     lui est accordée.] </head>
+                  <p>Le <persName ref="id_nom"><roleName ref="id_glossaire">premier
+                           chambellan</roleName> de <roleName ref="id_glossaire">S. M. l’Empereur et
+                           Roi</roleName>, <roleName ref="id_glossaire">surintendant des
+                           spectacles</roleName></persName>, vu les demandes réitérées de <persName
+                        ref="id_nom">M. Saint-Prix</persName>, acteur <term ref="id_glossaire"
+                        >sociétaire</term> du <orgName ref="id_org">Théâtre-Français</orgName>,
+                     tendant à obtenir la retraite, Et cédant avec regret aux vives instances qui
+                     lui ont été faites à cet égard, arrête :</p>
+                  <list type="article">
+                     <label>Article 1er</label>
+                     <item n="1">La demande de retraite de <persName ref="id_nom">M.
+                           Saint-Prix</persName> est accordée.</item>
+                     <label>Article 2e</label>
+                     <item n="2"> Le <term ref="id_glossaire">commissaire impérial</term> est chargé
+                        de l’exécution du présent arrêté. </item>
+                  </list>
+                  <closer><roleName>Le surintendant des spectacles.</roleName>
+                     <lb/>
+                     <placeName type="id_lieu">Paris</placeName> ce <date when="1813-01-15">15
+                        janvier 1813</date>
+                     <lb/>
+                     <signed>Signé, le <persName ref="id_nom">comte de Rémusat.</persName></signed>
+                  </closer>
+               </div>
+               <div type="arrêté" ana="id_nom id_sujet" when="1813-01-15">
+                  <head>[Arrêté de <roleName ref="id_glossaire">M. le surintendant</roleName> sur la
+                     demande de <persName ref="id_nom">Mlle Devienne</persName>. Sa retraite lui est
+                     accordée.]</head>
+                  <opener> Le <persName ref="id_nom"><roleName ref="id_glossaire">premier
+                           chambellan</roleName> de <roleName ref="id_glossaire">S. M. l’Empereur et
+                           Roi</roleName>, <roleName ref="id_glossaire">surintendant des
+                           spectacles</roleName></persName>, Vu la demande de <persName ref="id_nom"
+                        >Mlle Devienne</persName> tendant à obtenir sa retraite, Regrettant que la
+                     santé de cette sociétaire ne lui permette pas de continuer son service au
+                        <orgName ref="id_org">Théâtre-Français</orgName>, Arrête </opener>
+                  <list>
+                     <label>Article 1er </label>
+                     <item n="1">La demande de retraite de <persName ref="id_nom">Mlle
+                           Devienne</persName> est accordée, à dater du <date when="1813-04-01">1er
+                           avril</date> prochain.</item>
+                     <label>Article 2e</label>
+                     <item n="2">Le <roleName ref="id_glossaire">commissaire impérial</roleName> est
+                        chargé de l’exécution du présent arrêté.</item>
+                  </list>
+                  <closer><roleName ref="id_glossaire">Le surintendant des spectacles.</roleName>
+                     <lb/>
+                     <placeName type="id_lieu">Paris</placeName> ce <date when="1813-01-15">15
+                        janvier 1813</date>
+                     <lb/>
+                     <signed>Signé, le <persName ref="id_nom">comte de Rémusat.</persName></signed>
+                  </closer>
+               </div>
+            </div>
+         </div>
+
+      </body>
+   </text>
+</TEI>
