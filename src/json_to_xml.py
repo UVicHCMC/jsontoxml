@@ -42,12 +42,46 @@ def main():
     # add one <persName> node per <person> with all the subnodes
     # add the other fields as top-level nodes to <person>
     # <person> has an xml:id that is auto-generated
-
+    num = 1
+    seen = []
     for comedian in comedians:
         person = ET.SubElement(listPerson, 'person')
+        # if comedian last name-code is already used, increment the digit number. E.g. MOLI1, MOLI2
+        # todo: write unit test to exercise the name code and also the incrementation if there are repeated last names
+        # todo: ask what to do if there are no last names for a given entry. What does the xml:id become in that case?
+        if comedian.last_name:
+            if comedian.last_name[0:4] in seen:
+                num += 1
+            comedian_code = f"{comedian.last_name[0:4]}{num}"
+            seen.append(comedian.last_name[0:4])
+
+            person.set('xml:id', comedian_code)
+
+        person.set('ana', 'comédien.ne CF')
+
         persName = ET.SubElement(person, 'persName')
+
+        idno = ET.SubElement(persName, 'idno')
+        idno.set('type', 'base_unifiee')
+        idno.text = str(comedian.id)
+
+        pseudonym = ET.SubElement(persName, 'reg')
+        pseudonym.text = comedian.pseudonym
+
         forename = ET.SubElement(persName, 'forename')
         forename.text = comedian.first_name
+
+        surname = ET.SubElement(persName, 'surname')
+        surname.text = comedian.last_name
+
+        variations = ET.SubElement(persName, 'addName')
+        variations.text = comedian.variations
+        variations.set('type', 'variations')
+
+        variations = ET.SubElement(persName, 'addName')
+        variations.text = comedian.title
+        variations.set('titre', 'variations')
+
 
         # Prettify output (requires Python 3.9)
     ET.indent(tree)
