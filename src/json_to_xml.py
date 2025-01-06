@@ -82,6 +82,16 @@ def main():
         variations.text = comedian.title
         variations.set('titre', 'variations')
 
+        # gender and occupation fields
+        gender = ET.SubElement(person, 'gender')
+
+        if comedian.female:
+            gender.set('type', 'feminin')
+        else:
+            gender.set('type', 'masculin')
+
+        occupation = ET.SubElement(person, 'occupation')
+        occupation.set('type', 'feminin')
 
         # Prettify output (requires Python 3.9)
     ET.indent(tree)
