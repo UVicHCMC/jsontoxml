@@ -37,8 +37,6 @@ class JsonToXml:
             num = 1
             person = ET.SubElement(list_person, 'person')
             # if comedian last name-code is already used, increment the digit number. E.g. MOLI1, MOLI2
-            # todo: write unit test to exercise the name code and also the incrementation if there are repeated last names
-            # todo: ask what to do if there are no last names for a given entry. What does the xml:id become in that case?
             if comedian.last_name:
                 if comedian.last_name[0:4] in seen:
                     num = seen.count(comedian.last_name[0:4]) + 1
@@ -103,7 +101,6 @@ class JsonToXml:
         ET.indent(tree)
         tree.write('../output/example_mod.xml', encoding='UTF-8', xml_declaration=True,
                    method='xml')
-
 
 
 if __name__ == '__main__':
