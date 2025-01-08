@@ -92,10 +92,10 @@ class JsonToXml:
                 if comedian.entry and comedian.departure:
                     occupation.set('from', str(comedian.entry))
                     occupation.set('to', str(comedian.departure))
-                occupation2 = ET.SubElement(person, 'occupation')
-                occupation2.set('type', 'sociétariat')
+                additional_occupation = ET.SubElement(person, 'occupation')
+                additional_occupation.set('type', 'sociétariat')
                 if comedian.society:
-                    occupation2.set('when', str(comedian.society))
+                    additional_occupation.set('when', str(comedian.society))
             if comedian.status == 'ocasionnel':
                 occupation.set('type', comedian.status)
 
