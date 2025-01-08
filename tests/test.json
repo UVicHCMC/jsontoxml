@@ -1,0 +1,17 @@
+{
+  "comedians": [
+    {
+      "id": 1,
+      "pseudonyme": "Comedian1",
+      "variations": "v1",
+      "prénom": "John",
+      "nom": "Doe",
+      "titre": "Mr.",
+      "féminin": false,
+      "statut": "pensionnaire",
+      "entrée": 2000,
+      "sociétariat": 2011,
+      "départ": 2010
+    }
+  ]
+}
