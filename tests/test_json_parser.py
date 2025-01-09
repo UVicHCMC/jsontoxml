@@ -53,3 +53,4 @@ class TestJsonToXml:
             data = json.load(file)
             assert data['id'] == 1
             assert data['pseudonyme'] == 'Comedian1'
+            # todo: finish this up
