@@ -45,13 +45,17 @@ class JsonToXml:
 
                 person.set('xml:id', comedian_code)
 
-            person.set('ana', 'comédien.ne CF')
+            if comedian.status == 'pensionnaire' or comedian.status == 'sociétaire':
+                person.set('ana', 'comédien.ne CF')
 
-            pers_name = ET.SubElement(person, 'persName')
+            if comedian.status == 'ocasionnel':
+                person.set('ana', 'comédien.ne occasionnel.le')
 
-            idno = ET.SubElement(pers_name, 'idno')
+            idno = ET.SubElement(person, 'idno')
             idno.set('type', 'base_unifiee')
             idno.text = str(comedian.id)
+
+            pers_name = ET.SubElement(person, 'persName')
 
             pseudonym = ET.SubElement(pers_name, 'reg')
             pseudonym.text = comedian.pseudonym
@@ -95,7 +99,7 @@ class JsonToXml:
                 if comedian.society:
                     additional_occupation.set('when', str(comedian.society))
             if comedian.status == 'ocasionnel':
-                occupation.set('type', comedian.status)
+                occupation.set('type', 'occasionnel')
 
             # Prettify output (requires Python 3.9)
         ET.indent(tree)
