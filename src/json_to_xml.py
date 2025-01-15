@@ -1,6 +1,7 @@
 import json
 import xml.etree.ElementTree as ET
 
+from src.authors import Author
 from src.comedians import Comedian
 
 
@@ -101,7 +102,52 @@ class JsonToXml:
             if comedian.status == 'ocasionnel':
                 occupation.set('type', 'occasionnel')
 
-            # Prettify output (requires Python 3.9)
+        authors = list()
+        # flatten "data" to get rid of the awkward key
+        # Open and read the JSON file
+        with open('../json_exports/auteurs.json', 'r') as file:
+            data = json.load(file)
+
+        for entry_list in data.values():
+            for entry in entry_list:
+                author = Author(entry['id'], entry['nom'], entry['féminin'])
+                authors.append(author)
+
+        list_person = root.find(".//{http://www.tei-c.org/ns/1.0}listPerson")
+        # add one <persName> node per <person> with all the subnodes
+        # add the other fields as top-level nodes to <person>
+        # <person> has an xml:id that is auto-generated
+
+        for author in authors:
+            num = 1
+            person = ET.SubElement(list_person, 'person')
+            # if comedian last name-code is already used, increment the digit number. E.g. MOLI1, MOLI2
+            if author.pseudonym:
+                if author.pseudonym[0:4] in seen:
+                    num = seen.count(author.pseudonym[0:4]) + 1
+                author_code = f"{author.pseudonym[0:4].upper()}{num}"
+                seen.append(author.pseudonym[0:4])
+
+                person.set('xml:id', author_code)
+
+            idno = ET.SubElement(person, 'idno')
+            idno.set('type', 'base_unifiee')
+            idno.text = str(author.id)
+
+            pers_name = ET.SubElement(person, 'persName')
+
+            pseudonym = ET.SubElement(pers_name, 'reg')
+            pseudonym.text = author.pseudonym
+
+            # gender and occupation fields
+            gender = ET.SubElement(person, 'gender')
+
+            if author.female:
+                gender.set('type', 'feminin')
+            else:
+                gender.set('type', 'masculin')
+
+        # Prettify output (requires Python 3.9)
         ET.indent(tree)
         tree.write('../output/example_mod.xml', encoding='UTF-8', xml_declaration=True,
                    method='xml')
