@@ -39,12 +39,10 @@ class JsonToXml:
             person = ET.SubElement(list_person, 'person')
             # if comedian last name-code is already used, increment the digit number. E.g. MOLI1, MOLI2
             if comedian.last_name:
-                if comedian.last_name[0:4] in seen:
-                    num = seen.count(comedian.last_name[0:4]) + 1
-                comedian_code = f"{comedian.last_name[0:4].upper()}{num}"
-                seen.append(comedian.last_name[0:4])
+                JsonToXml.create_comedian_code(comedian.last_name, num, person, seen)
 
-                person.set('xml:id', comedian_code)
+            elif comedian.pseudonym:
+                JsonToXml.create_comedian_code(comedian.pseudonym, num, person, seen)
 
             if comedian.status == 'pensionnaire' or comedian.status == 'sociétaire':
                 person.set('ana', 'comédien.ne CF')
@@ -123,12 +121,7 @@ class JsonToXml:
             person = ET.SubElement(list_person, 'person')
             # if comedian last name-code is already used, increment the digit number. E.g. MOLI1, MOLI2
             if author.pseudonym:
-                if author.pseudonym[0:4] in seen:
-                    num = seen.count(author.pseudonym[0:4]) + 1
-                author_code = f"{author.pseudonym[0:4].upper()}{num}"
-                seen.append(author.pseudonym[0:4])
-
-                person.set('xml:id', author_code)
+                JsonToXml.create_comedian_code(author.pseudonym, num, person, seen)
 
             idno = ET.SubElement(person, 'idno')
             idno.set('type', 'base_unifiee')
@@ -151,6 +144,14 @@ class JsonToXml:
         ET.indent(tree)
         tree.write('../output/example_mod.xml', encoding='UTF-8', xml_declaration=True,
                    method='xml')
+
+    @staticmethod
+    def create_comedian_code(comedian_string, num, person, seen):
+        if comedian_string[0:4] in seen:
+            num = seen.count(comedian_string[0:4]) + 1
+        comedian_code = f"{comedian_string[0:4].upper()}{num}"
+        seen.append(comedian_string[0:4])
+        person.set('xml:id', comedian_code)
 
 
 if __name__ == '__main__':
