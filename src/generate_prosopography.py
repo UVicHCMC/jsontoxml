@@ -7,7 +7,7 @@ from src.comedians import Comedian
 
 class JsonToXml:
     @staticmethod
-    def parse_json():
+    def parse_comedians_jsons():
         tree = ET.parse('../output/example_prosopography.xml')
         ET.register_namespace('', "http://www.tei-c.org/ns/1.0")
         root = tree.getroot()
@@ -155,4 +155,4 @@ class JsonToXml:
 
 
 if __name__ == '__main__':
-    JsonToXml.parse_json()
+    JsonToXml.parse_comedians_jsons()

@@ -2,7 +2,7 @@ import json
 import xml.etree.ElementTree as ET
 from unittest import mock
 
-from src.json_to_xml import JsonToXml
+from src.generate_prosopography import JsonToXml
 
 
 class TestJsonToXml:
@@ -19,7 +19,7 @@ class TestJsonToXml:
         root = mock_tree.getroot()
         mock_list_person = ET.SubElement(root, "listPerson")
         mock_parse_json.return_value = mock_tree
-        JsonToXml.parse_json()
+        JsonToXml.parse_comedians_jsons()
         # Check if the XML tree was modified correctly
         persons = mock_list_person.findall(".//person")
         assert len(persons) == 1
