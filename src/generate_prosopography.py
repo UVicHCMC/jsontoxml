@@ -8,7 +8,7 @@ from src.comedians import Comedian
 class JsonToXml:
     @staticmethod
     def parse_comedians_jsons():
-        tree = ET.parse('../output/example_prosopography.xml')
+        tree = ET.parse('../output/template_prosopography.xml')
         ET.register_namespace('', "http://www.tei-c.org/ns/1.0")
         root = tree.getroot()
 
@@ -142,11 +142,13 @@ class JsonToXml:
 
         # Prettify output (requires Python 3.9)
         ET.indent(tree)
-        tree.write('../output/example_mod.xml', encoding='UTF-8', xml_declaration=True,
+        tree.write('../output/prosopography.xml', encoding='UTF-8', xml_declaration=True,
                    method='xml')
 
     @staticmethod
     def create_comedian_code(comedian_string, num, person, seen):
+        comedian_string = comedian_string.replace(' ', '')
+        comedian_string = comedian_string.replace('\'', '')
         if comedian_string[0:4] in seen:
             num = seen.count(comedian_string[0:4]) + 1
         comedian_code = f"{comedian_string[0:4].upper()}{num}"
