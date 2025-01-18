@@ -51,7 +51,7 @@ class JsonToXml:
                 person.set('ana', 'comédien.ne occasionnel.le')
 
             idno = ET.SubElement(person, 'idno')
-            idno.set('type', 'base_unifiee')
+            idno.set('type', 'base_unifiée')
             idno.text = str(comedian.id)
 
             pers_name = ET.SubElement(person, 'persName')
