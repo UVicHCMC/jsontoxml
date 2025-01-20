@@ -81,20 +81,20 @@ class JsonToXml:
                         if author.id == attribution.author_id:
                             author_el.text = author.pseudonym
 
-
         ET.indent(tree)
         tree.write('../output/plays.xml', encoding='UTF-8', xml_declaration=True,
                    method='xml')
 
     @staticmethod
     def create_title_code(title_string, num, item, seen):
-
-        title_string = title_string.replace(' ', '')
+        title_string = title_string.split("(L")[0].strip()
+        title_string = title_string.replace(' ', '-')
         title_string = title_string.replace('\'', '')
-        if title_string[0:4] in seen:
-            num = seen.count(title_string[0:4]) + 1
-        comedian_code = f"{title_string[0:4].upper()}{num}"
-        seen.append(title_string[0:4])
+        title_string = title_string.replace(',', '')
+        if title_string[0:11] in seen:
+            num = seen.count(title_string[0:11]) + 1
+        comedian_code = f"{title_string[0:11].upper()}{num}"
+        seen.append(title_string[0:11])
         item.set('xml:id', comedian_code)
 
 
