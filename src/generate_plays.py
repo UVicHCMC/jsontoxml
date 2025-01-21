@@ -54,7 +54,6 @@ class JsonToXml:
                 attribution = Attribution(entry['id'], entry['id_pièce'], entry['id_auteur'])
                 attributions.append(attribution)
 
-
         roles = []
         # flatten "data" to get rid of the awkward key
         # Open and read the JSON file
@@ -107,12 +106,29 @@ class JsonToXml:
 
             cast_list = ET.SubElement(item, 'castList')
 
-            if title_code:
-                for role in roles:
-                    if role.play_id == play.id:
-                        cast_item = ET.SubElement(cast_list, 'castItem')
-                        cast_member_code = JsonToXml.create_cast_member_code(title_code, role.name, num_name, cast_item, seen_name)
-                        cast_item.set('xml:id', cast_member_code)
+            if not title_code:
+                title_code = JsonToXml.create_title_code('ST', num_title, item, seen_title)
+
+            for role in roles:
+                if role.play_id == play.id:
+                    cast_item = ET.SubElement(cast_list, 'castItem')
+                    cast_member_code = JsonToXml.create_cast_member_code(title_code, role.name, num_name, cast_item,
+                                                                         seen_name)
+                    cast_item.set('xml:id', cast_member_code)
+                    idno_cast = ET.SubElement(cast_item, 'idno')
+                    idno_cast.set('type', 'base_unifiée')
+                    idno_cast.text = str(role.id)
+
+                    role_cast = ET.SubElement(cast_item, 'role')
+                    role_cast.text = str(role.name)
+                    if role.female:
+                        role_cast.set('gender', 'féminin')
+                    else:
+                        role_cast.set('gender', 'masculin')
+                    role_cast.text = str(role.name)
+
+                    role_title = ET.SubElement(cast_item, 'addName')
+                    role_title.text = str(role.category)
 
         ET.indent(tree)
         tree.write('../output/plays.xml', encoding='UTF-8', xml_declaration=True,
