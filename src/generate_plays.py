@@ -1,6 +1,7 @@
 import json
 import xml.etree.ElementTree as ET
 
+from src.roles import Role
 from src.attributions import Attribution
 from src.authors import Author
 from src.plays import Play
@@ -53,16 +54,31 @@ class JsonToXml:
                 attribution = Attribution(entry['id'], entry['id_pièce'], entry['id_auteur'])
                 attributions.append(attribution)
 
-        seen = []
+
+        roles = []
+        # flatten "data" to get rid of the awkward key
+        # Open and read the JSON file
+        with open('../json_exports/rôles.json', 'r') as file:
+            data = json.load(file)
+
+        for entry_list in data.values():
+            for entry in entry_list:
+                role = Role(entry['id'], entry['nom'], entry['catégorie'], entry['féminin'], entry['id_pièce'])
+                roles.append(role)
+
+        seen_title = []
+        seen_name = []
+        title_code = None
 
         for play in plays:
-            num = 1
+            num_title = 1
+            num_name = 1
             item = ET.SubElement(list, 'item')
 
             # if play title name-code is already used, increment the digit number. E.g. PLAY1, PLAY2
 
             if play.title:
-                JsonToXml.create_title_code(play.title, num, item, seen)
+                title_code = JsonToXml.create_title_code(play.title, num_title, item, seen_title)
 
             bibl = ET.SubElement(item, 'bibl')
 
@@ -81,21 +97,55 @@ class JsonToXml:
                         if author.id == attribution.author_id:
                             author_el.text = author.pseudonym
 
+            if play.creation_date:
+                date = ET.SubElement(bibl, 'date')
+                date.set('when', play.creation_date)
+
+            note = ET.SubElement(bibl, 'note')
+            note.set('type', 'genre')
+            note.text = play.genre
+
+            cast_list = ET.SubElement(item, 'castList')
+
+            if title_code:
+                for role in roles:
+                    if role.play_id == play.id:
+                        cast_item = ET.SubElement(cast_list, 'castItem')
+                        cast_member_code = JsonToXml.create_cast_member_code(title_code, role.name, num_name, cast_item, seen_name)
+                        cast_item.set('xml:id', cast_member_code)
+
         ET.indent(tree)
         tree.write('../output/plays.xml', encoding='UTF-8', xml_declaration=True,
                    method='xml')
 
     @staticmethod
-    def create_title_code(title_string, num, item, seen):
+    def create_title_code(title_string, num, item, seen_title):
         title_string = title_string.split("(L")[0].strip()
         title_string = title_string.replace(' ', '-')
         title_string = title_string.replace('\'', '')
         title_string = title_string.replace(',', '')
-        if title_string[0:11] in seen:
-            num = seen.count(title_string[0:11]) + 1
-        comedian_code = f"{title_string[0:11].upper()}{num}"
-        seen.append(title_string[0:11])
-        item.set('xml:id', comedian_code)
+        if title_string[0:11] in seen_title:
+            num = seen_title.count(title_string[0:11]) + 1
+        title_code = f"{title_string[0:11].upper()}{num}"
+        seen_title.append(title_string[0:11])
+        item.set('xml:id', title_code)
+        return title_code
+
+    @staticmethod
+    def create_cast_member_code(title_code, comedian_string, num_name, cast_item, seen_name):
+
+        comedian_string = comedian_string.replace(' ', '')
+        comedian_string = comedian_string.replace('\'', '')
+
+        if comedian_string[0:4] in seen_name:
+            num_name = seen_name.count(comedian_string[0:4]) + 1
+
+        comedian_code = f"{comedian_string[0:4].upper()}{num_name}"
+        seen_name.append(comedian_string[0:4])
+
+        cast_member_code = f"{title_code}_{comedian_code}"
+
+        return cast_member_code
 
 
 if __name__ == '__main__':
