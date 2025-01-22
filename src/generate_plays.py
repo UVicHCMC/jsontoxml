@@ -1,5 +1,5 @@
 import json
-import xml.etree.ElementTree as ET
+from lxml import etree as ET
 
 from src.roles import Role
 from src.attributions import Attribution
@@ -11,7 +11,7 @@ class JsonToXml:
     @staticmethod
     def parse_comedians_jsons():
         tree = ET.parse('../output/template_plays.xml')
-        ET.register_namespace('', "http://www.tei-c.org/ns/1.0")
+        ET.register_namespace('TEI', "http://www.tei-c.org/ns/1.0")
         root = tree.getroot()
 
         plays = []
@@ -114,7 +114,7 @@ class JsonToXml:
                     cast_item = ET.SubElement(cast_list, 'castItem')
                     cast_member_code = JsonToXml.create_cast_member_code(title_code, role.name, num_name, cast_item,
                                                                          seen_name)
-                    cast_item.set('xml:id', cast_member_code)
+                    cast_item.attrib["{http://www.w3.org/XML/1998/namespace}id"] = cast_member_code
                     idno_cast = ET.SubElement(cast_item, 'idno')
                     idno_cast.set('type', 'base_unifiée')
                     idno_cast.text = str(role.id)
@@ -144,7 +144,7 @@ class JsonToXml:
             num = seen_title.count(title_string[0:11]) + 1
         title_code = f"{title_string[0:11].upper()}{num}"
         seen_title.append(title_string[0:11])
-        item.set('xml:id', title_code)
+        item.attrib["{http://www.w3.org/XML/1998/namespace}id"] = title_code
         return title_code
 
     @staticmethod

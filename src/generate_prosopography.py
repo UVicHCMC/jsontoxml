@@ -1,6 +1,5 @@
 import json
-import xml.etree.ElementTree as ET
-
+from lxml import etree as ET
 from src.authors import Author
 from src.comedians import Comedian
 
@@ -9,8 +8,9 @@ class JsonToXml:
     @staticmethod
     def parse_comedians_jsons():
         tree = ET.parse('../output/template_prosopography.xml')
-        ET.register_namespace('', "http://www.tei-c.org/ns/1.0")
+        ET.register_namespace('TEI', "http://www.tei-c.org/ns/1.0")
         root = tree.getroot()
+
 
         comedians = list()
         # flatten "data" to get rid of the awkward key
@@ -144,6 +144,8 @@ class JsonToXml:
 
         # Prettify output (requires Python 3.9)
         ET.indent(tree)
+
+
         tree.write('../output/prosopography.xml', encoding='UTF-8', xml_declaration=True,
                    method='xml')
 
@@ -155,7 +157,7 @@ class JsonToXml:
             num = seen.count(comedian_string[0:4]) + 1
         comedian_code = f"{comedian_string[0:4].upper()}{num}"
         seen.append(comedian_string[0:4])
-        person.set('xml:id', comedian_code)
+        person.attrib["{http://www.w3.org/XML/1998/namespace}id"] = comedian_code
 
 
 if __name__ == '__main__':
