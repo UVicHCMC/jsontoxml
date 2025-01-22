@@ -123,8 +123,10 @@ class JsonToXml:
             if author.pseudonym:
                 JsonToXml.create_comedian_code(author.pseudonym, num, person, seen)
 
+            person.set('ana', 'auteur.rice')
+
             idno = ET.SubElement(person, 'idno')
-            idno.set('type', 'base_unifiee')
+            idno.set('type', 'base_unifiée_auteurs')
             idno.text = str(author.id)
 
             pers_name = ET.SubElement(person, 'persName')
@@ -136,9 +138,9 @@ class JsonToXml:
             gender = ET.SubElement(person, 'gender')
 
             if author.female:
-                gender.set('type', 'feminin')
+                gender.set('value', 'féminin')
             else:
-                gender.set('type', 'masculin')
+                gender.set('value', 'masculin')
 
         # Prettify output (requires Python 3.9)
         ET.indent(tree)
