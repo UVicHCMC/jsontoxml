@@ -70,14 +70,13 @@ class JsonToXml:
         title_code = None
 
         for play in plays:
-            num_title = 1
-            num_name = 1
+
             item = ET.SubElement(list, 'item')
 
             # if play title name-code is already used, increment the digit number. E.g. PLAY1, PLAY2
 
             if play.title:
-                title_code = JsonToXml.create_title_code(play.title, num_title, item, seen_title)
+                title_code = JsonToXml.create_title_code(play.title, item, seen_title)
 
             bibl = ET.SubElement(item, 'bibl')
 
@@ -107,12 +106,12 @@ class JsonToXml:
             cast_list = ET.SubElement(item, 'castList')
 
             if not title_code:
-                title_code = JsonToXml.create_title_code('ST', num_title, item, seen_title)
+                title_code = JsonToXml.create_title_code('ST', item, seen_title)
 
             for role in roles:
                 if role.play_id == play.id:
                     cast_item = ET.SubElement(cast_list, 'castItem')
-                    cast_member_code = JsonToXml.create_cast_member_code(title_code, role.name, num_name, cast_item,
+                    cast_member_code = JsonToXml.create_cast_member_code(title_code, role.name, cast_item,
                                                                          seen_name)
                     cast_item.attrib["{http://www.w3.org/XML/1998/namespace}id"] = cast_member_code
                     idno_cast = ET.SubElement(cast_item, 'idno')
@@ -135,11 +134,13 @@ class JsonToXml:
                    method='xml')
 
     @staticmethod
-    def create_title_code(title_string, num, item, seen_title):
+    def create_title_code(title_string, item, seen_title):
+        num = 1
         title_string = title_string.split("(L")[0].strip()
         title_string = title_string.replace(' ', '-')
         title_string = title_string.replace('\'', '')
         title_string = title_string.replace(',', '')
+        title_string = title_string.lower()
         if title_string[0:11] in seen_title:
             num = seen_title.count(title_string[0:11]) + 1
         title_code = f"{title_string[0:11].upper()}{num}"
@@ -148,10 +149,11 @@ class JsonToXml:
         return title_code
 
     @staticmethod
-    def create_cast_member_code(title_code, comedian_string, num_name, cast_item, seen_name):
-
+    def create_cast_member_code(title_code, comedian_string, cast_item, seen_name):
+        num_name = 1
         comedian_string = comedian_string.replace(' ', '')
         comedian_string = comedian_string.replace('\'', '')
+        comedian_string = comedian_string.lower()
 
         if comedian_string[0:4] in seen_name:
             num_name = seen_name.count(comedian_string[0:4]) + 1
