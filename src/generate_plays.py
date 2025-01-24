@@ -103,13 +103,12 @@ class JsonToXml:
             note.set('type', 'genre')
             note.text = play.genre
 
-            cast_list = ET.SubElement(item, 'castList')
-
             if not title_code:
                 title_code = JsonToXml.create_title_code('ST', item, seen_title)
 
             for role in roles:
                 if role.play_id == play.id:
+                    cast_list = ET.SubElement(item, 'castList')
                     cast_item = ET.SubElement(cast_list, 'castItem')
                     cast_member_code = JsonToXml.create_cast_member_code(title_code, role.name, cast_item,
                                                                          seen_name)
@@ -137,8 +136,11 @@ class JsonToXml:
     def create_title_code(title_string, item, seen_title):
         num = 1
         title_string = title_string.split("(L")[0].strip()
+        if '/' in title_string:
+            title_string = f"{title_string.split('/')[0].strip()}-{title_string.split('/')[1].strip()}"
         title_string = title_string.replace(' ', '-')
         title_string = title_string.replace('\'', '')
+        title_string = title_string.replace('’', '')
         title_string = title_string.replace(',', '')
         title_string = title_string.lower()
         if title_string[0:11] in seen_title:
