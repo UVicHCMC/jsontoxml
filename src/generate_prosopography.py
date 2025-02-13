@@ -5,17 +5,21 @@ from src.comedians import Comedian
 
 
 class JsonToXml:
+
     @staticmethod
-    def parse_comedians_jsons():
-        tree = ET.parse('../output/template_prosopography.xml')
+    def parse_comedians_jsons(template='output/template_prosopography.xml',
+                              comedians_file='json_exports/comédiens.json',
+                              authors_file='json_exports/auteurs.json',
+                              output_file='output/prosopography.xml'):
+
+        tree = ET.parse(template)
         ET.register_namespace('TEI', "http://www.tei-c.org/ns/1.0")
         root = tree.getroot()
-
 
         comedians = list()
         # flatten "data" to get rid of the awkward key
         # Open and read the JSON file
-        with open('../json_exports/comédiens.json', 'r') as file:
+        with open(comedians_file, 'r') as file:
             data = json.load(file)
 
         for entry_list in data.values():
@@ -102,7 +106,7 @@ class JsonToXml:
         authors = list()
         # flatten "data" to get rid of the awkward key
         # Open and read the JSON file
-        with open('../json_exports/auteurs.json', 'r') as file:
+        with open(authors_file, 'r') as file:
             data = json.load(file)
 
         for entry_list in data.values():
@@ -144,8 +148,7 @@ class JsonToXml:
         # Prettify output (requires Python 3.9)
         ET.indent(tree)
 
-
-        tree.write('../output/prosopography.xml', encoding='UTF-8', xml_declaration=True,
+        tree.write(output_file, encoding='UTF-8', xml_declaration=True,
                    method='xml')
 
     @staticmethod

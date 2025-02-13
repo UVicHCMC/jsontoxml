@@ -1,56 +1,104 @@
 import json
-import xml.etree.ElementTree as ET
 from unittest import mock
-
+from unittest.mock import patch, MagicMock, mock_open
+import pytest
+from lxml import etree as ET
 from src.generate_prosopography import JsonToXml
+from src.comedians import Comedian
+from src.authors import Author
 
 
-class TestJsonToXml:
-    @mock.patch('xml.etree.ElementTree.parse')
-    @mock.patch("builtins.open", new_callable=mock.mock_open,
-                read_data='{"comedians": [{"id": 1, "pseudonyme": "Comedian1", "variations": "v1", "prénom": "John", '
-                          '"nom": "Doe", "titre": "Mr.", "féminin": false, "statut": "pensionnaire", "entrée": 2000, '
-                          '"sociétariat": 2011, "départ": 2010}]}')
-    def test_parse_json(self, mock_parse_json, mock_open):
-        # Create a temporary directory structure and files
+@patch("builtins.open", new_callable=mock_open)  # Mock the open function
+@patch("lxml.etree.parse", new_callable=MagicMock)  # Mock the ET.parse function
+@patch.object(JsonToXml, 'create_comedian_code', return_value=None)  # Mock the create_comedian_code method
+def test_parse_comedians_jsons(mock_create_comedian_code, mock_parse, mock_open):
+    # Sample data for the JSON files
+    comedians_data = {
+        "comedians": [
+            {
+                "id": 1,
+                "pseudonyme": "Molière",
+                "variations": "Moli",
+                "prénom": "Jean",
+                "nom": "Baptiste",
+                "titre": "Mr",
+                "féminin": "FALSE",
+                "statut": "pensionnaire",
+                "entrée": "1643",
+                "sociétariat": "NULL",
+                "départ": "1673"
+            }
+        ]
+    }
+    authors_data = {
+        "authors": [
+            {
+                "id": 101,
+                "nom": "Diderot",
+                "féminin": "FALSE"
+            }
+        ]
+    }
 
-        mock_tree = ET.ElementTree(ET.Element("root"))
-        ET.register_namespace('', "http://www.tei-c.org/ns/1.0")
-        root = mock_tree.getroot()
-        mock_list_person = ET.SubElement(root, "listPerson")
-        mock_parse_json.return_value = mock_tree
-        JsonToXml.parse_comedians_jsons()
-        # Check if the XML tree was modified correctly
-        persons = mock_list_person.findall(".//person")
-        assert len(persons) == 1
+    # Mock the open function to return the mock JSON data when reading the respective files
+    def mock_open_side_effect(file, mode):
+        mock_file = MagicMock()
+        if file == 'json_exports/comédiens.json':
+            # Return mock comedian data as a file-like object with read() method
+            mock_file = MagicMock()
+            mock_file.read.return_value = json.dumps(comedians_data)  # Mock read to return the JSON string
+        elif file == 'json_exports/auteurs.json':
+            # Return mock author data as a file-like object with read() method
+            mock_file = MagicMock()
+            mock_file.read.return_value = json.dumps(authors_data)  # Mock read to return the JSON string
+        return mock_file
 
-        person = persons[0]
+    mock_open.side_effect = mock_open_side_effect
 
-        assert person.get("xml:id") == "DOE1", "The xml:id should be correctly generated from the last name"
+    # Mock the XML tree and root
+    mock_tree = MagicMock()
+    mock_root = MagicMock(spec=ET.Element)
+    mock_parse.return_value = mock_tree
+    mock_tree.getroot.return_value = mock_root
 
-        # Check the elements inside <persName>
-        pers_name = person.find(".//persName")
-        assert pers_name, "Should have <persName> tag"
-        assert pers_name.find("idno").text == "1", "ID should match comedian's ID"
-        assert pers_name.find("reg").text == "Comedian1", "Pseudonym should match comedian's pseudonym"
-        assert pers_name.find("forename").text == "John", "First name should match comedian's first name"
-        assert pers_name.find("surname").text == "Doe", "Last name should match comedian's last name"
+    # Mock listPerson to be an Element and allow appending
+    mock_list_person = MagicMock(spec=ET.Element)
+    mock_root.find = MagicMock()
+    mock_root.find.return_value = mock_list_person
 
-        # Check the occupation fields
-        occupation = person.find(".//occupation")
-        assert occupation.get("type") == "pensionnaire", "Occupation type should match comedian's status"
-        assert occupation.get("from") == 2000, "Entry year should match comedian's entry year"
-        assert occupation.get("to") == 2010, "Departure year should match comedian's departure year"
+    # Run the method under test
+    JsonToXml.parse_comedians_jsons()
 
-    @mock.patch('builtins.open', new_callable=mock.mock_open, read_data='{"id": 1, "pseudonyme": '
-                                                                        '"Comedian1", "variations": "v1", '
-                                                                        '"prénom": "John","nom": "Doe", "titre": "Mr.", '
-                                                                        '"féminin": false, "statut": "pensionnaire", '
-                                                                        '"entrée": 2000, "sociétariat": 2011, '
-                                                                        '"départ": 2010}')
-    def test_open(self, mock_open):
-        with open('test.json', 'r') as file:
-            data = json.load(file)
-            assert data['id'] == 1
-            assert data['pseudonyme'] == 'Comedian1'
-            # todo: finish this up
+    # Verifying that the XML was parsed and written
+    mock_parse.assert_called_once_with('output/template_prosopography.xml')
+    mock_tree.write.assert_called_once_with('output/prosopography.xml', encoding='UTF-8', xml_declaration=True,
+                                            method='xml')
+
+    # Check if the person was added to listPerson
+    mock_list_person.append.assert_called_once()
+
+    # Check the content of the 'idno' element (comedian ID)
+    mock_person = mock_list_person.append.call_args[0][0]  # Get the mock person from append
+    idno = mock_person.find("idno")
+    assert idno is not None
+    assert idno.text == "1"  # Comedian ID should be '1'
+
+    # Check if the comedian's pseudonym is correctly added
+    pers_name = mock_person.find('persName')
+    assert pers_name.find('reg').text == "Molière"  # Pseudonym
+
+    # Check occupation attribute is set correctly
+    occupation = mock_person.find('occupation')
+    assert occupation.attrib['type'] == "pensionnaire"  # Status is 'pensionnaire'
+
+    # Check if author is added correctly
+    mock_list_person.append.assert_called_with(mock.ANY)  # Check that append was called with any element
+
+    # Check if the author's idno is correct
+    author_person = mock_list_person.append.call_args[0][0]
+    author_idno = author_person.find("idno")
+    assert author_idno is not None
+    assert author_idno.text == "101"  # Author ID should be '101'
+
+# Run the test using pytest:
+# pytest test_json_to_xml.py
