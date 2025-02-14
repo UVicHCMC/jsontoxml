@@ -48,9 +48,9 @@ def test_parse_comedians_jsons(mock_create_comedian_code, mock_parse, mock_open)
     mock_open.side_effect = mock_open_side_effect
 
     # Create a real XML tree
-    NSMAP = {"tei": "http://www.tei-c.org/ns/1.0"}
+    nsmap = {"tei": "http://www.tei-c.org/ns/1.0"}
 
-    root = ET.Element("TEI", nsmap=NSMAP)
+    root = ET.Element("TEI", nsmap=nsmap)
     list_person = ET.SubElement(root, "{http://www.tei-c.org/ns/1.0}listPerson")  # Properly created element
 
     # Mock parse to return this tree
@@ -58,6 +58,7 @@ def test_parse_comedians_jsons(mock_create_comedian_code, mock_parse, mock_open)
     mock_parse.return_value = tree
 
     # need to create an actual element tree, a mock won't do for parsing
+    # also have to change the output file, lest it override the actual prosopography
     JsonToXml.parse_comedians_jsons(output_file='tests/test_prosopography.xml')
 
     # Verifying that the XML was parsed and written
@@ -67,20 +68,20 @@ def test_parse_comedians_jsons(mock_create_comedian_code, mock_parse, mock_open)
     output_tree = ET.parse('tests/test_prosopography.xml')
     ET.register_namespace('TEI', "http://www.tei-c.org/ns/1.0")
     root = output_tree.getroot()
-    person = root.find(".//{http://www.tei-c.org/ns/1.0}listPerson/person[@ana='comédien.ne CF']")
-    idno = person.find('idno')
+    comedian = root.find(".//{http://www.tei-c.org/ns/1.0}listPerson/person[@ana='comédien.ne CF']")
+    comedian_idno = comedian.find('idno')
     # Check the content of the 'idno' element (comedian ID)
 
-    assert idno is not None
-    assert idno.text == "1"  # Comedian ID should be '1'
+    assert comedian_idno is not None
+    assert comedian_idno.text == "1"  # Comedian ID should be '1'
 
     # Check if the comedian's pseudonym is correctly added
-    pers_name = person.find('persName')
-    assert pers_name.find('reg').text == "Molière"  # Pseudonym
+    comedian_name = comedian.find('persName')
+    assert comedian_name.find('reg').text == "Molière"  # Pseudonym
 
     # Check occupation attribute is set correctly
-    occupation = person.find('occupation')
-    assert occupation.attrib['type'] == "pensionnaire"  # Status is 'pensionnaire'
+    comedian_occupation = comedian.find('occupation')
+    assert comedian_occupation.attrib['type'] == "pensionnaire"  # Status is 'pensionnaire'
 
     # Check if the author's idno is correct
     author_person = root.find(".//{http://www.tei-c.org/ns/1.0}listPerson/person[@ana='auteur.rice']")
