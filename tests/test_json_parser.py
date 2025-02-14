@@ -1,9 +1,10 @@
 import json
+from io import StringIO
 from unittest import mock
 from unittest.mock import patch, MagicMock, mock_open
-import pytest
 from lxml import etree as ET
 from src.generate_prosopography import JsonToXml
+import pytest
 from src.comedians import Comedian
 from src.authors import Author
 
@@ -42,43 +43,36 @@ def test_parse_comedians_jsons(mock_create_comedian_code, mock_parse, mock_open)
 
     # Mock the open function to return the mock JSON data when reading the respective files
     def mock_open_side_effect(file, mode):
-        mock_file = MagicMock()
         if file == 'json_exports/comédiens.json':
-            # Return mock comedian data as a file-like object with read() method
-            mock_file = MagicMock()
-            mock_file.read.return_value = json.dumps(comedians_data)  # Mock read to return the JSON string
+            return StringIO(json.dumps(comedians_data))  # Proper file-like object
         elif file == 'json_exports/auteurs.json':
-            # Return mock author data as a file-like object with read() method
-            mock_file = MagicMock()
-            mock_file.read.return_value = json.dumps(authors_data)  # Mock read to return the JSON string
-        return mock_file
+            return StringIO(json.dumps(authors_data))
+        return MagicMock()  # Default fallback
 
     mock_open.side_effect = mock_open_side_effect
 
-    # Mock the XML tree and root
-    mock_tree = MagicMock()
-    mock_root = MagicMock(spec=ET.Element)
-    mock_parse.return_value = mock_tree
-    mock_tree.getroot.return_value = mock_root
+    # Create a real XML tree
+    NSMAP = {"tei": "http://www.tei-c.org/ns/1.0"}
 
-    # Mock listPerson to be an Element and allow appending
-    mock_list_person = MagicMock(spec=ET.Element)
-    mock_root.find = MagicMock()
-    mock_root.find.return_value = mock_list_person
+    root = ET.Element("TEI", nsmap=NSMAP)
+    list_person = ET.SubElement(root, "{http://www.tei-c.org/ns/1.0}listPerson") # Properly created element
 
-    # Run the method under test
-    JsonToXml.parse_comedians_jsons()
+    # Mock parse to return this tree
+    tree = ET.ElementTree(root)
+    mock_parse.return_value = tree
+
+
+    # need to create an actual element tree, a mock won't do for parsing
+    JsonToXml.parse_comedians_jsons(output_file='tests/test_prosopography.xml')
 
     # Verifying that the XML was parsed and written
     mock_parse.assert_called_once_with('output/template_prosopography.xml')
-    mock_tree.write.assert_called_once_with('output/prosopography.xml', encoding='UTF-8', xml_declaration=True,
-                                            method='xml')
 
     # Check if the person was added to listPerson
-    mock_list_person.append.assert_called_once()
+    list_person.append.assert_called_once()
 
     # Check the content of the 'idno' element (comedian ID)
-    mock_person = mock_list_person.append.call_args[0][0]  # Get the mock person from append
+    mock_person = list_person.append.call_args[0][0]  # Get the mock person from append
     idno = mock_person.find("idno")
     assert idno is not None
     assert idno.text == "1"  # Comedian ID should be '1'
