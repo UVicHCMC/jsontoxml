@@ -7,7 +7,7 @@ from src.comedians import Comedian
 class JsonToXml:
 
     @staticmethod
-    def parse_comedians_jsons(template='output/template_prosopography.xml',
+    def parse_comedians_jsons(template='templates/template_prosopography.xml',
                               comedians_file='json_exports/comédiens.json',
                               authors_file='json_exports/auteurs.json',
                               output_file='output/prosopography.xml'):
