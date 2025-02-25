@@ -6,6 +6,7 @@ from src.generate_plays import JsonToXml
 
 
 class TestJsonToXml:
+    #test_parse_json failing
     @mock.patch('xml.etree.ElementTree.parse')
     @mock.patch("builtins.open", new_callable=mock.mock_open,
                 read_data='{"comedians": [{"id": 1, "pseudonyme": "Comedian1", "variations": "v1", "prénom": "John", '

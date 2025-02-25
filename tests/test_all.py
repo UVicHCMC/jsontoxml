@@ -8,7 +8,7 @@ from src.generate_plays import JsonToXml
 
 class TestJsonToXml:
 
-
+    #test_valid_json not working
     @mock.patch("builtins.open", new_callable=mock.mock_open)
     @mock.patch('lxml.etree.parse')
     def test_valid_json(self, mock_parse, mock_open):
