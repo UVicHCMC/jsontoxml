@@ -58,10 +58,9 @@ class TestJsonToXml:
         """Test that empty JSON data is handled gracefully."""
         ns = "http://www.tei-c.org/ns/1.0"
         root = ET.Element("root", nsmap={"TEI": ns})
-        list_person = ET.SubElement(root, f"{{{ns}}}listPerson")
-        mock_tree = mock.Mock()
-        mock_tree.getroot.return_value = root
-        mock_parse.return_value = mock_tree
+        ET.SubElement(root, f"{{{ns}}}listPerson")
+        tree = ET.ElementTree(root)  # Use a real ElementTree instance
+        mock_parse.return_value = tree
 
         JsonToXml.parse_comedians_jsons()
 
