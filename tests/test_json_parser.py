@@ -2,12 +2,12 @@ import json
 from io import StringIO
 from unittest.mock import patch, MagicMock, mock_open
 from lxml import etree as ET
-from src.generate_prosopography import JsonToXml
+from src.generate_prosopography import JsonToXmlProsopography
 
 
 @patch("builtins.open", new_callable=mock_open)  # Mock the open function
 @patch("lxml.etree.parse", new_callable=MagicMock)  # Mock the ET.parse function
-@patch.object(JsonToXml, 'create_comedian_code', return_value=None)  # Mock the create_comedian_code method
+@patch.object(JsonToXmlProsopography, 'create_comedian_code', return_value=None)  # Mock the create_comedian_code method
 def test_parse_comedians_jsons(mock_create_comedian_code, mock_parse, mock_open):
     # Sample data for the JSON files
     comedians_data = {
@@ -59,7 +59,7 @@ def test_parse_comedians_jsons(mock_create_comedian_code, mock_parse, mock_open)
 
     # need to create an actual element tree, a mock won't do for parsing
     # also have to change the output file, lest it override the actual prosopography
-    JsonToXml.parse_comedians_jsons(output_file='tests/test_prosopography.xml')
+    JsonToXmlProsopography.parse_comedians_jsons(output_file='tests/test_prosopography.xml')
 
     # Verifying that the XML was parsed and written
     mock_parse.assert_called_once_with('output/template_prosopography.xml')

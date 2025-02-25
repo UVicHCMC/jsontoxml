@@ -7,7 +7,7 @@ from src.authors import Author
 from src.plays import Play
 
 
-class JsonToXml:
+class JsonToXmlPlays:
     @staticmethod
     def parse_comedians_jsons():
         tree = ET.parse('../templates/template_plays.xml')
@@ -76,7 +76,7 @@ class JsonToXml:
             # if play title name-code is already used, increment the digit number. E.g. PLAY1, PLAY2
 
             if play.title:
-                title_code = JsonToXml.create_title_code(play.title, item, seen_title)
+                title_code = JsonToXmlPlays.create_title_code(play.title, item, seen_title)
 
             bibl = ET.SubElement(item, 'bibl')
 
@@ -104,14 +104,14 @@ class JsonToXml:
             note.text = play.genre
 
             if not title_code:
-                title_code = JsonToXml.create_title_code('ST', item, seen_title)
+                title_code = JsonToXmlPlays.create_title_code('ST', item, seen_title)
 
             for role in roles:
                 if role.play_id == play.id:
                     cast_list = ET.SubElement(item, 'castList')
                     cast_item = ET.SubElement(cast_list, 'castItem')
-                    cast_member_code = JsonToXml.create_cast_member_code(title_code, role.name, cast_item,
-                                                                         seen_name)
+                    cast_member_code = JsonToXmlPlays.create_cast_member_code(title_code, role.name, cast_item,
+                                                                              seen_name)
                     cast_item.attrib["{http://www.w3.org/XML/1998/namespace}id"] = cast_member_code
                     idno_cast = ET.SubElement(cast_item, 'idno')
                     idno_cast.set('type', 'base_unifiée')
@@ -169,4 +169,4 @@ class JsonToXml:
 
 
 if __name__ == '__main__':
-    JsonToXml.parse_comedians_jsons()
+    JsonToXmlPlays.parse_comedians_jsons()

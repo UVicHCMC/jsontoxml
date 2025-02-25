@@ -4,7 +4,7 @@ from src.authors import Author
 from src.comedians import Comedian
 
 
-class JsonToXml:
+class JsonToXmlProsopography:
 
     @staticmethod
     def parse_comedians_jsons(template='templates/template_prosopography.xml',
@@ -42,10 +42,10 @@ class JsonToXml:
             person = ET.SubElement(list_person, 'person')
             # if comedian last name-code is already used, increment the digit number. E.g. MOLI1, MOLI2
             if comedian.last_name:
-                JsonToXml.create_comedian_code(comedian.last_name, person, seen)
+                JsonToXmlProsopography.create_comedian_code(comedian.last_name, person, seen)
 
             elif comedian.pseudonym:
-                JsonToXml.create_comedian_code(comedian.pseudonym, person, seen)
+                JsonToXmlProsopography.create_comedian_code(comedian.pseudonym, person, seen)
 
             if comedian.status == 'pensionnaire' or comedian.status == 'sociétaire':
                 person.set('ana', 'comédien.ne CF')
@@ -124,7 +124,7 @@ class JsonToXml:
             person = ET.SubElement(list_person, 'person')
             # if comedian last name-code is already used, increment the digit number. E.g. MOLI1, MOLI2
             if author.pseudonym:
-                JsonToXml.create_comedian_code(author.pseudonym, person, seen)
+                JsonToXmlProsopography.create_comedian_code(author.pseudonym, person, seen)
 
             person.set('ana', 'auteur.rice')
 
@@ -166,4 +166,4 @@ class JsonToXml:
 
 
 if __name__ == '__main__':
-    JsonToXml.parse_comedians_jsons()
+    JsonToXmlProsopography.parse_comedians_jsons()
