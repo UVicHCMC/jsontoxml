@@ -2,7 +2,7 @@ import json
 import xml.etree.ElementTree as ET
 from unittest import mock
 
-from src.generate_prosopography import JsonToXml
+from src.generate_plays import JsonToXml
 
 
 class TestJsonToXml:
