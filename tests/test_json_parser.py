@@ -62,7 +62,7 @@ def test_parse_comedians_jsons(mock_create_comedian_code, mock_parse, mock_open)
     JsonToXmlProsopography.parse_comedians_jsons(output_file='tests/test_prosopography.xml')
 
     # Verifying that the XML was parsed and written
-    mock_parse.assert_called_once_with('output/template_prosopography.xml')
+    mock_parse.assert_called_once_with('templates/template_prosopography.xml')
 
     # test the output results
     output_tree = ET.parse('tests/test_prosopography.xml')

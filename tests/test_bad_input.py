@@ -3,7 +3,7 @@ import pytest
 from unittest import mock
 from lxml import etree as ET
 
-from src.generate_plays import JsonToXml
+from src.generate_plays import JsonToXmlPlays
 
 
 class TestJsonToXml:
@@ -18,7 +18,7 @@ class TestJsonToXml:
         tree = ET.ElementTree(root)  # Use a real ElementTree instance
         mock_parse.return_value = tree
 
-        JsonToXml.parse_comedians_jsons()
+        JsonToXmlPlays.parse_comedians_jsons()
 
         list_person = root.find(f".//{{{ns}}}listPerson")
         assert list_person is not None, "listPerson should still exist in the XML."
@@ -37,4 +37,4 @@ class TestJsonToXml:
         mock_parse.return_value = mock_tree
 
         with pytest.raises(json.JSONDecodeError):
-            JsonToXml.parse_comedians_jsons()
+            JsonToXmlPlays.parse_comedians_jsons()
