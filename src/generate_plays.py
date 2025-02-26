@@ -10,7 +10,7 @@ from src.plays import Play
 class JsonToXml:
     @staticmethod
     def parse_comedians_jsons():
-        tree = ET.parse('../output/template_plays.xml')
+        tree = ET.parse('../templates/template_plays.xml')
         ET.register_namespace('TEI', "http://www.tei-c.org/ns/1.0")
         root = tree.getroot()
 
